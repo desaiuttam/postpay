@@ -120,15 +120,17 @@ class Config extends AbstractConfig
      */
     public function getUiParams($storeId = null)
     {
+        $locale = $this->scopeConfig->getValue(
+                'general/locale/code',
+                ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+        $locale = substr($locale, 0, strpos($locale, "_"));
         return [
             'merchantId' => $this->getMerchantId($storeId),
             'sandbox' => $this->isSandbox($storeId),
             'theme' => $this->getTheme($storeId),
-            'locale' => $this->scopeConfig->getValue(
-                'general/locale/code',
-                ScopeInterface::SCOPE_STORE,
-                $storeId
-            )
+            'locale' => $locale
         ];
     }
 }
